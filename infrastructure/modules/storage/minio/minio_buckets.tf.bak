@@ -1,0 +1,7 @@
+resource "minio_s3_bucket" "create_bucket" {
+  count         = length(var.buckets_names)
+  bucket        = var.buckets_names[count.index]
+  acl           = "private"
+  depends_on    = [kubernetes_service.minio_svc, kubernetes_deployment.minio_deploy]
+  force_destroy = var.destroy-infra
+}
